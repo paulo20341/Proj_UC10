@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/app.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>{% block title %}Agendamento{% endblock %}</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; /* Faz o corpo ocupar toda a altura da tela */
+        }
+
+        #header {
+            background-color: #444;
+            color: white;
+            padding: 20px 0;
+        }
+
+        #menu {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: auto;
+            padding: 0 20px;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #ffa500; /* Cor ao passar o mouse */
+        }
+
+        .form-container {
+            max-width: 600px;
+            margin: 40px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .form-container h2 {
+            margin-bottom: 20px;
+            text-align: center;
+            color: #444;
+        }
+
+        .form-container label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .form-container select,
+        .form-container input[type="datetime-local"],
+        .form-container input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            transition: border 0.3s;
+        }
+
+        .form-container input:focus,
+        .form-container select:focus {
+            border-color: #444; /* Cor ao focar no input */
+            outline: none;
+        }
+
+        .form-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .form-container button:hover {
+            background-color: #45a049; /* Cor ao passar o mouse */
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #333;
+            color: white;
+            margin-top: auto; /* Faz o footer se mover para o final */
+        }
+    </style>
+</head>
+<body>
+
+
+
+
+{% block conte %}
+    <div class="form-container">
+        <h2>Agendar Consulta</h2>
+        <form action="{{ url_for('agendar') }}" method="post">
+            <label for="cliente_id">Cliente:</label>
+            <select name="cliente_id" id="cliente_id" required>
+                {% for cliente in clientes %}
+                    <option value="{{ cliente.id }}">{{ cliente.nome }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="animal_id">Animal:</label>
+            <select name="animal_id" id="animal_id" required>
+                {% for animal in animais %}
+                    <option value="{{ animal.id }}">{{ animal.nome }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="data_inicio">Data e Hora de Início:</label>
+            <input type="datetime-local" name="data_inicio" id="data_inicio" required>
+
+            <label for="data_fim">Data e Hora de Fim:</label>
+            <input type="datetime-local" name="data_fim" id="data_fim" required>
+
+            <label for="servico">Serviço:</label>
+            <input type="text" name="servico" id="servico" required placeholder="Ex: Banho, Tosquia">
+
+            <button type="submit">Agendar</button>
+        </form>
+    </div>
+{% endblock %}
+
+<footer>
+    Todos os Direitos Reservados - Família Pet - 2024
+</footer>
+
+</body>
+</html>

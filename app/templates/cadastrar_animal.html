@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block title %}Cadastrar Animal{% endblock %}
+
+{% block conte %}
+<style>
+    /* Estilos específicos para a página de cadastro */
+    .form-container {
+        max-width: 600px;
+        margin: 40px auto;
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .form-container h1 {
+        margin-bottom: 20px;
+        text-align: center;
+        color: #444;
+    }
+
+    .form-container label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: 600;
+    }
+
+    .form-container input[type="text"],
+    .form-container input[type="number"],
+    .form-container select {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        transition: border 0.3s;
+    }
+
+    .form-container input:focus,
+    .form-container select:focus {
+        border-color: #444;
+        outline: none;
+    }
+
+    .form-container button {
+        width: 100%;
+        padding: 10px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background 0.3s;
+    }
+
+    .form-container button:hover {
+        background-color: #45a049;
+    }
+</style>
+
+<div class="form-container">
+    <h1>Cadastrar Animal</h1>
+    <form method="post">
+        <label for="nome">Nome:</label>
+        <input type="text" name="nome" placeholder="Ex: Rex, Nina" required>
+
+        <label for="especie">Espécie:</label>
+        <input type="text" name="especie" placeholder="Ex: Cachorro, Gato" required>
+
+        <label for="raca">Raça:</label>
+        <input type="text" name="raca" placeholder="Ex: Labrador, Siamês" required>
+
+        <label for="idade">Idade:</label>
+        <input type="number" name="idade" placeholder="Ex: 3" required>
+
+        <label for="cliente_id">Cliente:</label>
+        <select name="cliente_id" required>
+            {% for cliente in clientes %}
+            <option value="{{ cliente.id }}">{{ cliente.nome }}</option>
+            {% endfor %}
+        </select>
+
+        <button type="submit">Cadastrar</button>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <title>PETSHOP Tupiniquim - Login</title>
+    <style>
+        /* Reset e Estilo Básico */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(120deg, #f7b42c, #fc575e);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #333;
+        }
+
+        #content {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            width: 100%;
+            max-width: 420px;
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        #logo img {
+            width: 150px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 24px;
+            color: #444;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        h1.cta {
+            font-size: 16px;
+            color: #777;
+            margin-top: 20px;
+        }
+
+        .blocoFormulario {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        label {
+            font-size: 14px;
+            font-weight: 500;
+            color: #555;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .inputBase {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        .inputBase:focus {
+            border-color: #fc575e;
+            outline: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px 0;
+            background: #fc575e;
+            border: none;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background: #f44653;
+        }
+
+        a {
+            text-decoration: none;
+            color: #fc575e;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        a:hover {
+            color: #d43d45;
+        }
+
+        footer {
+            width: 100%;
+            text-align: center;
+            position: absolute;
+            bottom: 10px;
+            font-size: 12px;
+            color: #aaa;
+        }
+    </style>
+</head>
+<body>
+    <div id="content">
+        <div id="logo">
+            <img src="imagens/logo.png" alt="Logo PETSHOP Tupiniquim">
+        </div>
+        <h1>Bem-vindo ao PETSHOP Tupiniquim</h1>
+        <form method="post" action="/login">
+            <div class="blocoFormulario">
+                <label for="user">Nome de Usuário</label>
+                <input type="text" id="user" name="user" class="inputBase" placeholder="Digite seu usuário" required>
+            </div>
+            <div class="blocoFormulario">
+                <label for="senha">Senha</label>
+                <input type="password" id="senha" name="senha" class="inputBase" placeholder="Digite sua senha" required>
+            </div>
+            <button type="submit">Entrar</button>
+        </form>
+        <h1 class="cta">Não tem uma conta?</h1>
+        <a href="/register">Crie sua conta aqui</a>
+    </div>
+    <footer>
+        © 2024 PETSHOP Tupiniquim. Todos os direitos reservados.
+    </footer>
+</body>
+</html>

@@ -1,0 +1,167 @@
+{% extends "base.html" %}
+
+{% block title %}Agendamento de Serviço{% endblock %}
+
+{% block conte %}
+<style>
+    /* Estilos específicos para a página de agendamento */
+    body {
+        font-family: 'Poppins', sans-serif;
+        background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+    }
+
+    .form-container {
+        max-width: 600px;
+        background: #fff;
+        padding: 30px 40px;
+        border-radius: 16px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        text-align: center;
+        animation: fadeIn 0.5s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .form-container h1 {
+        font-size: 24px;
+        margin-bottom: 20px;
+        color: #444;
+        font-weight: 700;
+    }
+
+    .form-container label {
+        display: block;
+        text-align: left;
+        margin-bottom: 8px;
+        font-size: 14px;
+        font-weight: 600;
+        color: #555;
+    }
+
+    .form-container select,
+    .form-container input[type="datetime-local"],
+    .form-container input[type="text"] {
+        width: 100%;
+        padding: 12px 15px;
+        margin-bottom: 20px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 14px;
+        color: #444;
+        transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    .form-container select:focus,
+    .form-container input:focus {
+        border-color: #4CAF50;
+        box-shadow: 0 0 8px rgba(76, 175, 80, 0.3);
+        outline: none;
+    }
+
+    .form-container button {
+        width: 100%;
+        padding: 12px;
+        font-size: 16px;
+        font-weight: 700;
+        color: #fff;
+        background: #4CAF50;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background 0.3s, transform 0.2s;
+    }
+
+    .form-container button:hover {
+        background: #45a049;
+        transform: translateY(-2px);
+    }
+
+    .form-container button:active {
+        transform: translateY(0);
+    }
+
+    .form-container small {
+        display: block;
+        text-align: center;
+        color: #888;
+        margin-top: 10px;
+    }
+
+    .form-container small a {
+        color: #4CAF50;
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+    .form-container small a:hover {
+        text-decoration: underline;
+    }
+    footer a {
+        color: #4CAF50;
+        text-decoration: none;
+        font-weight: 600;
+    }
+    footer {
+        background: #333;
+        color: #fff;
+        text-align: center;
+        padding: 20px;
+        font-size: 14px;
+        position: relative;
+        width: 100%;
+    }
+
+    footer a:hover {
+        text-decoration: underline;
+    }
+
+    footer p {
+        margin: 5px 0;
+    }
+</style>
+
+<div class="form-container">
+    <h1>Agendamento de Serviço</h1>
+    <form method="post" action="{{ url_for('clientes.agendar') }}">
+        <label for="cliente_id">Cliente:</label>
+        <select name="cliente_id" id="cliente_id" required>
+            {% for cliente in clientes %}
+            <option value="{{ cliente.id }}">{{ cliente.nome }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="animal_id">Animal:</label>
+        <select name="animal_id" id="animal_id" required>
+            {% for animal in animais %}
+            <option value="{{ animal.id }}">{{ animal.nome }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="data_inicio">Data de Início:</label>
+        <input type="datetime-local" name="data_inicio" id="data_inicio" required>
+
+        <label for="data_fim">Data de Fim:</label>
+        <input type="datetime-local" name="data_fim" id="data_fim" required>
+
+        <label for="servico">Serviço:</label>
+        <input type="text" name="servico" id="servico" placeholder="Ex: banho, tosquia" required>
+
+        <button type="submit">Confirmar Agendamento</button>
+    </form>
+    <small>Precisa de ajuda? <a href="/contato">Entre em contato conosco</a>.</small>
+</div>
+{% endblock %}
