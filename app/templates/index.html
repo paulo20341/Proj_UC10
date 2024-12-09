@@ -212,6 +212,7 @@
 <section id="home" class="hero">
     <div class="hero-content">
         <h1>Bem-vindo à Família Pet</h1>
+        
         <p>Conforto e cuidado para seu animal de estimação</p>
         <a href="#produtos" class="cta-button">Explorar Produtos</a>
     </div>
@@ -223,17 +224,18 @@
         <div class="product-grid" id="productGrid">
             <!-- Exemplo de produtos -->
             <div class="product-card" onclick="openProductDetails('Cama de Gato', 'Conforto e qualidade para seu pet', 134.99, 'caminho/para/imagem-produto1.jpg')">
-                <img src="caminho/para/imagem-produto1.jpg" alt="Cama de Gato">
+                <img src="{{ url_for('static', filename='images/cama.png') }}" alt="Cama">
+
                 <h3>Cama de Gato</h3>
                 <span class="price">R$ 134.99</span>
             </div>
             <div class="product-card" onclick="openProductDetails('Ração Premium', 'Nutrição balanceada para seu animal', 59.99, 'caminho/para/imagem-produto2.jpg')">
-                <img src="caminho/para/imagem-produto2.jpg" alt="Ração Premium">
+                <img src="{{ url_for('static', filename='images/racao.png') }}" alt="Ração">
                 <h3>Ração Premium</h3>
                 <span class="price">R$ 59.99</span>
             </div>
-            <div class="product-card" onclick="openProductDetails('Brinquedo Interativo', 'Entretenimento para o seu pet', 29.99, 'caminho/para/imagem-produto3.jpg')">
-                <img src="caminho/para/imagem-produto3.jpg" alt="Brinquedo Interativo">
+            <div class="product-card" onclick="openProductDetails('Bebedouro para Gato', 'Entretenimento para o seu pet', 29.99, 'caminho/para/imagem-produto3.jpg')">
+                <img src="{{ url_for('static', filename='images/bebedouro.jpg') }}" alt="Cama">
                 <h3>Brinquedo Interativo</h3>
                 <span class="price">R$ 29.99</span>
             </div>
@@ -248,6 +250,7 @@
     <img id="productImage" src="" alt="">
     <p id="productDescription"></p>
     <span id="productPrice" class="price"></span>
+    <button class="add-to-cart" id="addToCartBtn">Comprar</button>
     <button class="add-to-cart" id="addToCartBtn">Adicionar ao Carrinho</button>
     <button class="close-details" onclick="closeProductDetails()">Fechar</button>
 </div>

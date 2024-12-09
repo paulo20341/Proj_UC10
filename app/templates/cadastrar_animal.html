@@ -75,6 +75,10 @@
         <label for="idade">Idade:</label>
         <input type="number" name="idade" placeholder="Ex: 3" required>
 
+        <!-- Pergunta de segurança -->
+        <label for="resposta">Qual é o nome do cachorrinho do admin?</label>
+        <input type="text" name="resposta" id="resposta" required><br>
+
         <label for="cliente_id">Cliente:</label>
         <select name="cliente_id" required>
             {% for cliente in clientes %}

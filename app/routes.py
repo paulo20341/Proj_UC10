@@ -109,7 +109,6 @@ def agendar():
     animais = Animal.query.all()
     return render_template('agendamento.html', clientes=clientes, animais=animais)
 
-# Rota para cadastrar animal (somente para usuários logados)
 @bp.route('/cadastrar_animal', methods=['GET', 'POST'])
 def cadastrar_animal():
     if not session.get('username'):
@@ -117,6 +116,12 @@ def cadastrar_animal():
         return redirect(url_for('clientes.login'))
 
     if request.method == 'POST':
+        resposta = request.form.get('resposta')
+        if resposta != 'belinha':  # Resposta para confirmar a ação
+            flash('Resposta incorreta. Você não tem permissão para cadastrar animais.', 'danger')
+            return redirect(url_for('clientes.cadastrar_animal'))  # Redireciona para a mesma página
+
+        # Dados do animal
         nome = request.form['nome']
         especie = request.form['especie']
         raca = request.form['raca']
@@ -124,12 +129,12 @@ def cadastrar_animal():
         cliente_id = request.form['cliente_id']
 
         novo_animal = Animal(nome=nome, especie=especie, raca=raca, idade=idade, cliente_id=cliente_id)
+        
         try:
             db.session.add(novo_animal)
             db.session.commit()
-
             flash('Animal cadastrado com sucesso.', 'success')
-            return redirect(url_for('clientes.listar_animais'))
+            return redirect(url_for('animais.listar_animais'))
         except Exception as e:
             flash(f'Ocorreu um erro ao cadastrar o animal: {str(e)}', 'danger')
 

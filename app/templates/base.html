@@ -4,9 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/app.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <title>{% block title %}Agendamento{% endblock %}</title>
     <style>
         body {
@@ -16,7 +13,7 @@
             background-color: #f5f5f5;
             display: flex;
             flex-direction: column;
-            min-height: 100vh; /* Faz o corpo ocupar toda a altura da tela */
+            min-height: 100vh;
         }
 
         #header {
@@ -52,7 +49,7 @@
         }
 
         nav ul li a:hover {
-            color: #ffa500; /* Cor ao passar o mouse */
+            color: #ffa500;
         }
 
         .form-container {
@@ -89,7 +86,7 @@
 
         .form-container input:focus,
         .form-container select:focus {
-            border-color: #444; /* Cor ao focar no input */
+            border-color: #444;
             outline: none;
         }
 
@@ -106,7 +103,7 @@
         }
 
         .form-container button:hover {
-            background-color: #45a049; /* Cor ao passar o mouse */
+            background-color: #45a049;
         }
 
         footer {
@@ -114,50 +111,77 @@
             padding: 20px;
             background-color: #333;
             color: white;
-            margin-top: auto; /* Faz o footer se mover para o final */
+            margin-top: auto;
+        }
+
+        .flash {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 4px;
+            font-weight: bold;
+            position: relative;
+        }
+
+        .flash.success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .flash.danger {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        /* Animação para desaparecimento */
+        .flash {
+            animation: fadeOut 5s forwards;
+        }
+
+        @keyframes fadeOut {
+            0% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                display: none;
+            }
         }
     </style>
 </head>
 <body>
 
-
-
-
-{% block conte %}
-    <div class="form-container">
-        <h2>Agendar Consulta</h2>
-        <form action="{{ url_for('agendar') }}" method="post">
-            <label for="cliente_id">Cliente:</label>
-            <select name="cliente_id" id="cliente_id" required>
-                {% for cliente in clientes %}
-                    <option value="{{ cliente.id }}">{{ cliente.nome }}</option>
-                {% endfor %}
-            </select>
-
-            <label for="animal_id">Animal:</label>
-            <select name="animal_id" id="animal_id" required>
-                {% for animal in animais %}
-                    <option value="{{ animal.id }}">{{ animal.nome }}</option>
-                {% endfor %}
-            </select>
-
-            <label for="data_inicio">Data e Hora de Início:</label>
-            <input type="datetime-local" name="data_inicio" id="data_inicio" required>
-
-            <label for="data_fim">Data e Hora de Fim:</label>
-            <input type="datetime-local" name="data_fim" id="data_fim" required>
-
-            <label for="servico">Serviço:</label>
-            <input type="text" name="servico" id="servico" required placeholder="Ex: Banho, Tosquia">
-
-            <button type="submit">Agendar</button>
-        </form>
+    <!-- Exibir mensagens flash -->
+    <div>
+        {% with mensagens = get_flashed_messages(with_categories=true) %}
+            {% if mensagens %}
+                <ul>
+                    {% for categoria, mensagem in mensagens %}
+                        <li class="flash {{ categoria }}">{{ mensagem }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
     </div>
-{% endblock %}
 
-<footer>
-    Todos os Direitos Reservados - Família Pet - 2024
-</footer>
+    {% block conte %}
+    {% endblock %}
+
+    <footer>
+        Todos os Direitos Reservados - Família Pet - 2024
+    </footer>
+
+    <!-- Script para remover mensagens após um tempo -->
+    <script>
+        setTimeout(function() {
+            const flashMessages = document.querySelectorAll('.flash');
+            flashMessages.forEach(function(message) {
+                message.style.display = 'none';
+            });
+        }, 3000); // 5000ms = 5 segundos
+    </script>
 
 </body>
 </html>
