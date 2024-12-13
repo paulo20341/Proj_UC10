@@ -250,7 +250,7 @@
     <img id="productImage" src="" alt="">
     <p id="productDescription"></p>
     <span id="productPrice" class="price"></span>
-    <button class="add-to-cart" id="addToCartBtn">Comprar</button>
+    <a class="add-to-cart" href="{{link_pagamento}}">Comprar</a>
     <button class="add-to-cart" id="addToCartBtn">Adicionar ao Carrinho</button>
     <button class="close-details" onclick="closeProductDetails()">Fechar</button>
 </div>
@@ -259,7 +259,7 @@
     function openProductDetails(name, description, price, imageUrl) {
         document.getElementById('productName').textContent = name;
         document.getElementById('productDescription').textContent = description;
-        document.getElementById('productPrice').textContent = `R$ ${price.toFixed(2)}`;
+        document.getElementById('productPrice').textContent = R$ ${price.toFixed(2)};
         document.getElementById('productImage').src = imageUrl;
         document.getElementById('productDetails').style.display = 'block';
     }
@@ -268,5 +268,5 @@
         document.getElementById('productDetails').style.display = 'none';
     }
 </script>
-
-{% endblock %}
+</html>
+{% endblock %} 

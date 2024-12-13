@@ -1,15 +1,44 @@
-from flask import Blueprint, render_template, request, flash, redirect, url_for, session
+from flask import Blueprint, render_template, request, flash, redirect, url_for, session, current_app
 from app.models import Animal, Reserva, Cliente, User
 from app import db
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
+from apimercadopago import gerar_link_pagamento
+import os
+import uuid
+from werkzeug.utils import secure_filename
 
 bp = Blueprint('clientes', __name__)
 
-# Página inicial
+# Rota inicial
 @bp.route('/')
 def index():
-    return render_template('index.html')
+    link_pagamento = gerar_link_pagamento()
+    return render_template('index.html', link_pagamento=link_pagamento)
+
+@bp.route('/update-profile-pic', methods=['POST'])
+def update_profile_pic():
+    if 'profile_pic' not in request.files:
+        flash('Nenhum arquivo selecionado.', 'error')
+        return redirect(url_for('clientes.index'))  # Alterado para 'clientes.index'
+    
+    file = request.files['profile_pic']
+    if file.filename == '':
+        flash('Nenhum arquivo foi escolhido.', 'error')
+        return redirect(url_for('clientes.index'))  # Alterado para 'clientes.index'
+    
+    if file:
+        # Gera um nome único para o arquivo
+        filename = secure_filename(file.filename)
+        unique_filename = f"{uuid.uuid4().hex}_{filename}"
+        
+        # Define o caminho para salvar a imagem na pasta 'uploads'
+        filepath = os.path.join(current_app.config['UPLOAD_FOLDER'], unique_filename)
+        
+        file.save(filepath)  # Salva o arquivo com um nome único
+        flash('Foto de perfil atualizada com sucesso!', 'success')
+        return redirect(url_for('clientes.index'))  # Alterado para 'clientes.index'
+
 
 # Registro de usuários
 @bp.route('/register', methods=['POST', 'GET'])
@@ -54,7 +83,7 @@ def login():
             session['username'] = usuario.Usuario
 
             flash('Login realizado com sucesso.', 'success')
-            return redirect(url_for('clientes.index'))
+            return redirect(url_for('clientes.index'))  # Alterado para 'clientes.index'
         else:
             flash('Nome de usuário ou senha incorretos.', 'danger')
 
@@ -101,7 +130,7 @@ def agendar():
             db.session.commit()
 
             flash('Reserva agendada com sucesso!', 'success')
-            return redirect(url_for('clientes.agendar'))
+            return redirect(url_for('clientes.agendar'))  # Alterado para 'clientes.agendar'
         except Exception as e:
             flash(f'Ocorreu um erro ao agendar a reserva: {str(e)}', 'danger')
 
@@ -119,7 +148,7 @@ def cadastrar_animal():
         resposta = request.form.get('resposta')
         if resposta != 'belinha':  # Resposta para confirmar a ação
             flash('Resposta incorreta. Você não tem permissão para cadastrar animais.', 'danger')
-            return redirect(url_for('clientes.cadastrar_animal'))  # Redireciona para a mesma página
+            return redirect(url_for('clientes.cadastrar_animal'))  # Alterado para 'clientes.cadastrar_animal'
 
         # Dados do animal
         nome = request.form['nome']
@@ -134,7 +163,7 @@ def cadastrar_animal():
             db.session.add(novo_animal)
             db.session.commit()
             flash('Animal cadastrado com sucesso.', 'success')
-            return redirect(url_for('animais.listar_animais'))
+            return redirect(url_for('animais.listar_animais'))  # Certifique-se de que esta rota está correta
         except Exception as e:
             flash(f'Ocorreu um erro ao cadastrar o animal: {str(e)}', 'danger')
 
